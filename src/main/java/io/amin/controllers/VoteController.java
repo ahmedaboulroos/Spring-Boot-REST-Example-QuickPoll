@@ -2,11 +2,9 @@ package io.amin.controllers;
 
 import io.amin.entities.Vote;
 import io.amin.repositories.VoteRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class VoteController {
@@ -18,10 +16,15 @@ public class VoteController {
     }
 
     @PostMapping("/polls/{pollId}/votes")
-    public ResponseEntity<?> createVote(@PathVariable int pollId, @RequestBody Vote vote) {
+    public ResponseEntity<Vote> createVote(@PathVariable int pollId, @RequestBody Vote vote) {
         Vote savedVote = voteRepository.save(vote);
+        return new ResponseEntity<>(savedVote, HttpStatus.CREATED);
+    }
 
-        return null;
+    @GetMapping("/polls/{pollId}/votes")
+    public ResponseEntity<Iterable<Vote>> getAllVotes(@PathVariable int pollId) {
+        Iterable<Vote> savedVotes = voteRepository.findByPollId(pollId);
+        return new ResponseEntity<>(savedVotes, HttpStatus.OK);
     }
 
 }
