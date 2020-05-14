@@ -1,4 +1,4 @@
-package io.amin.configs.docs;
+package io.amin.configs;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,12 +29,12 @@ public class SwaggerConfigurations {
     private ApiInfo apiDetails() {
         return new ApiInfo(
                 "QuickPoll",
-                "Demo App",
+                "QuickPoll Example API",
                 "1.0.0",
                 "amin.io",
-                new Contact("amin", "amin.io", "amin@gmail.com"),
+                new Contact("Ahmed Aboulroos", "amin.io", "ahmedaboulroos@gmail.com"),
                 "MIT",
-                "mit.url",
+                "mit.license.url",
                 Collections.emptyList()
         );
     }
