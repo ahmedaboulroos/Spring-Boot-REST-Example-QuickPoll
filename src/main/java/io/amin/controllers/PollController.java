@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -21,8 +23,9 @@ public class PollController {
     }
 
     @GetMapping("/polls")
-    public ResponseEntity<Iterable<Poll>> getAllPolls() {
-        Iterable<Poll> allPolls = pollRepository.findAll();
+    public ResponseEntity<List<Poll>> getAllPolls() {
+        List<Poll> allPolls = new ArrayList<>();
+        pollRepository.findAll().forEach(allPolls::add);
         return new ResponseEntity<>(allPolls, HttpStatus.OK);
     }
 

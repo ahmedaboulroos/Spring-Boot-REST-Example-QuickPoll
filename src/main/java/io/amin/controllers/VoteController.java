@@ -1,5 +1,6 @@
 package io.amin.controllers;
 
+import io.amin.entities.Poll;
 import io.amin.entities.Vote;
 import io.amin.exceptions.ResourceNotFoundException;
 import io.amin.repositories.PollRepository;
@@ -7,6 +8,9 @@ import io.amin.repositories.VoteRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -29,8 +33,9 @@ public class VoteController {
     }
 
     @GetMapping("/polls/{pollId}/votes")
-    public ResponseEntity<Iterable<Vote>> getAllVotes(@PathVariable int pollId) {
-        Iterable<Vote> savedVotes = voteRepository.findByPollId(pollId);
+    public ResponseEntity<List<Vote>> getAllVotes(@PathVariable int pollId) {
+        List<Vote> savedVotes = new ArrayList<>();
+        voteRepository.findByPollId(pollId).forEach(savedVotes::add);
         return new ResponseEntity<>(savedVotes, HttpStatus.OK);
     }
 
